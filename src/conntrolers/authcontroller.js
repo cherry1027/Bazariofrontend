@@ -47,8 +47,8 @@ export const login = async (req, res) => {
   }
 };
 
-// (Optional) Logout
+
 export const logout = (req, res) => {
-  // With JWT, logout is handled on frontend (remove token).
+  
   res.json({ message: "Logged out successfully (delete token on client)" });
 };
