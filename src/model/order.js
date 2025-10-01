@@ -15,8 +15,8 @@ const orderSchema = new mongoose.Schema({
   totalAmount: { type: Number, required: true },
   status: { type: String, enum: ["pending", "paid", "shipped", "delivered", "cancelled"], default: "pending" },
   createdAt: { type: Date, default: Date.now },
-  shippingAddress: { type: String }, // optional
-  paymentInfo: { type: mongoose.Schema.Types.Mixed }, // optional (for later)
+  shippingAddress: { type: String }, 
+  paymentInfo: { type: mongoose.Schema.Types.Mixed }, 
 });
 
 export default mongoose.model("Order", orderSchema);
