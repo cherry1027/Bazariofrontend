@@ -5,6 +5,7 @@ import "../styles/products.css";
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const backend = "http://localhost:5000";
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function ProductsPage() {
 
       const data = await res.json();
       if (!res.ok) return alert(data.message || "Failed to add to cart");
-      alert("✅ Added to cart!");
+      alert("Added to cart!");
     } catch (err) {
       alert("Something went wrong.");
       console.error(err);
@@ -53,10 +54,10 @@ export default function ProductsPage() {
       <div className="products-grid">
         {products.map((p) => (
           <div className="product-card" key={p._id}>
-            <img
-              src={`https://picsum.photos/seed/${p._id}/400/400`}
-              alt={p.name}
-            />
+           <img
+                src={p.imageUrl ? backend + p.imageUrl : ""}
+                alt={p.name}
+                />
             <div className="product-info">
               <h3>{p.name}</h3>
               <p className="desc">{p.description}</p>
