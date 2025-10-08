@@ -18,6 +18,7 @@ app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
 app.use("/cart", cartRoutes);
 app.use("/orders", orderRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 connectDB();

@@ -18,57 +18,66 @@ export default function CartPage() {
       setCart(Array.isArray(data.items) ? data.items : []);
     } catch (err) {
       console.error(err);
+      setCart([]);
     }
   };
 
-  const removeFromCart = async (productId) => {
+  const removeItem = async (productId) => {
     try {
-      const res = await fetch(`http://localhost:5000/cart/remove/${productId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to remove item");
-
-      fetchCart(); // Update UI
+      const res = await fetch(
+        `http://localhost:5000/cart/remove/${productId}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (res.ok) fetchCart();
     } catch (err) {
-      alert(err.message);
+      console.error(err);
     }
   };
 
-  const getTotal = () =>
-    cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+  const total = cart.reduce(
+    (sum, i) => sum + (i.product?.price || 0) * i.quantity,
+    0
+  );
 
   return (
-    <div className="cart-page">
-      <h2>Your Shopping Cart 🛒</h2>
+    <div className="cart-container">
+      <h2>Your Cart</h2>
+
       {cart.length === 0 ? (
-        <p className="empty">Your cart is empty.</p>
+        <p className="empty">🛍️ Your cart is empty.</p>
       ) : (
-        <>
+        <div className="cart-grid">
           <div className="cart-items">
             {cart.map((item) => (
-              <div className="cart-item" key={item.product._id}>
+              <div className="cart-card" key={item.product._id}>
+                <img
+                  src={`https://picsum.photos/seed/${item.product._id}/200/200`}
+                  alt={item.product.name}
+                />
                 <div className="cart-details">
                   <h3>{item.product.name}</h3>
-                  <p>{item.product.description}</p>
-                  <p className="price">${item.product.price}</p>
-                  <p>Quantity: {item.quantity}</p>
-                </div>
-                <div className="cart-actions">
-                  <button onClick={() => removeFromCart(item.product._id)}>
+                  <p>${item.product.price}</p>
+                  <p>Qty: {item.quantity}</p>
+                  <button
+                    className="remove-btn"
+                    onClick={() => removeItem(item.product._id)}
+                  >
                     Remove
                   </button>
                 </div>
               </div>
             ))}
           </div>
+
           <div className="cart-summary">
-            <h3>Total: ${getTotal().toFixed(2)}</h3>
+            <h3>Order Summary</h3>
+            <p>Total: ${total.toFixed(2)}</p>
             <button className="checkout-btn">Proceed to Checkout</button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

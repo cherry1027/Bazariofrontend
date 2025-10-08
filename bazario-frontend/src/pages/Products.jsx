@@ -4,32 +4,18 @@ import "../styles/products.css";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     fetchProducts();
-    fetchCartCount();
   }, []);
 
   const fetchProducts = async () => {
     try {
       const res = await fetch("http://localhost:5000/products");
       const data = await res.json();
-      setProducts(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchCartCount = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/cart/", {
-        headers: { Authorization: `Bearer ${token}`},
-      });
-      const data = await res.json();
-      setCartCount(data.length);
+      setProducts(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
     }
@@ -47,31 +33,38 @@ export default function ProductsPage() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to add to cart");
-
-      alert("✅ Product added to cart!");
-      fetchCartCount(); // Update cart count in UI
+      if (!res.ok) return alert(data.message || "Failed to add to cart");
+      alert("✅ Added to cart!");
     } catch (err) {
-      alert("❌ " + err.message);
+      alert("Something went wrong.");
+      console.error(err);
     }
   };
 
   return (
-    <div className="products-page">
-      <div className="cart-header">
-        <h2>🛒 Available Products</h2>
+    <div className="products-container">
+      <header className="products-header">
+        <h1>Bazario Marketplace</h1>
         <button className="cart-btn" onClick={() => navigate("/cart")}>
-          🛒 Cart ({cartCount})
+          🛒 View Cart
         </button>
-      </div>
+      </header>
 
-      <div className="product-grid">
+      <div className="products-grid">
         {products.map((p) => (
           <div className="product-card" key={p._id}>
-            <h3>{p.name}</h3>
-            <p>{p.description}</p>
-            <p className="price">${p.price}</p>
-            <button onClick={() => addToCart(p._id)}>Add to Cart</button>
+            <img
+              src={`https://picsum.photos/seed/${p._id}/400/400`}
+              alt={p.name}
+            />
+            <div className="product-info">
+              <h3>{p.name}</h3>
+              <p className="desc">{p.description}</p>
+              <p className="price">{p.price} krones</p>
+              <button className="add-btn" onClick={() => addToCart(p._id)}>
+                Add to Cart
+              </button>
+            </div>
           </div>
         ))}
       </div>

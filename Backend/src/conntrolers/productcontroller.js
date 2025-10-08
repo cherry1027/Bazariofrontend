@@ -8,12 +8,14 @@ export const createProduct = async (req, res) => {
     }
 
     const { title, description, price, category } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
     const product = await Product.create({
       title,
       description,
       price,
       category,
-      sellerId: req.user._id
+      sellerId: req.user._id,
+       imageUrl,
     });
 
     res.status(201).json(product);
