@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import "../styles/SellerDashboard.css";
 
 export default function SellerDashboard() {
   const [product, setProduct] = useState({
-    name: "",
+    title: "",
     price: "",
     description: "",
     imageFile: null,
@@ -31,7 +32,7 @@ export default function SellerDashboard() {
   const handleAddProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name", product.name);
+    formData.append("title", product.title);
     formData.append("price", product.price);
     formData.append("description", product.description);
     if (product.imageFile) formData.append("image", product.imageFile);
@@ -46,7 +47,7 @@ export default function SellerDashboard() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed");
       setMessage("Product added successfully!");
-      setProduct({ name: "", price: "", description: "", imageFile: null });
+      setProduct({ title: "", price: "", description: "", imageFile: null });
       fetchProducts(); 
     } catch (err) {
       console.error(err);
@@ -63,8 +64,8 @@ export default function SellerDashboard() {
         <input
           type="text"
           placeholder="Product Name"
-          value={product.name}
-          onChange={(e) => setProduct({ ...product, name: e.target.value })}
+          value={product.title}
+          onChange={(e) => setProduct({ ...product, title: e.target.value })}
           required
         />
         <input
