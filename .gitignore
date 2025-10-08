@@ -1,19 +1,39 @@
+# Ignore all node_modules folders (root, frontend, backend)
+node_modules/
+bazario-frontend/node_modules/
+Backend/node_modules/
 
-node_modules
-
-
+# Ignore environment files
 .env
+.env.*
+bazario-frontend/.env
+Backend/.env
 
-
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
+# OS files
 .DS_Store
 Thumbs.db
 
-.vscode/
-
-
+# Build output (optional but common)
 dist/
 build/
+bazario-frontend/dist/
+Backend/dist/
+
+# IDE / editor files
+.vscode/
+.idea/
+*.swp
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Misc cache
+.cache/

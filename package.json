@@ -1,27 +1,17 @@
 {
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.2",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.20.0",
-    "mongoose": "^8.18.1",
-    "node": "^24.8.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
-  },
-  "name": "backend",
+  "name": "bazario",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm --prefix Backend run dev",
+    "client": "npm --prefix bazario-frontend run dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
 }
