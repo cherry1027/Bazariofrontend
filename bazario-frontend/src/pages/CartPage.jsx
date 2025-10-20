@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/CartPage.css";
 
 export default function CartPage() {
   const [cart, setCart] = useState([]);
   const token = localStorage.getItem("token");
   const backend = "http://localhost:5000";
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCart();
@@ -26,7 +28,7 @@ export default function CartPage() {
 
   const removeItem = async (productId) => {
     try {
-      if (!productId) return; // safety check
+      if (!productId) return; 
       const res = await fetch(`${backend}/cart/remove/${productId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
@@ -82,7 +84,9 @@ export default function CartPage() {
           <div className="cart-summary">
             <h3>Order Summary</h3>
             <p>Total: {total.toFixed(2)} Krones</p>
-            <button className="checkout-btn">Proceed to Checkout</button>
+            <button className="checkout-btn" onClick={() => navigate("/checkout")}>
+                Proceed to Checkout
+                </button>
           </div>
         </div>
       )}
