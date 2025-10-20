@@ -104,7 +104,7 @@ export default function SellerDashboard() {
               alt={p.name}
             />
             <h4>{p.name}</h4>
-            <p>${p.price}</p>
+            <p>{p.price} krones</p>
             <p>{p.description}</p>
           </div>
         ))}

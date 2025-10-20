@@ -55,17 +55,17 @@ export default function ProductsPage() {
         {products.map((p) => (
           <div className="product-card" key={p._id}>
            <img
-                src={p.imageUrl ? backend + p.imageUrl : ""}
-                alt={p.name}
-                />
-            <div className="product-info">
-              <h3>{p.name}</h3>
+           src={p.imageUrl ? `${backend}${p.imageUrl.startsWith("/") ? p.imageUrl : "/" + p.imageUrl}` : ""}
+            alt={p.title}
+           />
+              <div className="product-info">
+              <h3>{p.title}</h3>
               <p className="desc">{p.description}</p>
               <p className="price">{p.price} krones</p>
               <button className="add-btn" onClick={() => addToCart(p._id)}>
                 Add to Cart
-              </button>
-            </div>
+            </button>
+          </div>
           </div>
         ))}
       </div>

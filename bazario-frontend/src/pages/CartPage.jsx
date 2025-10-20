@@ -4,6 +4,7 @@ import "../styles/CartPage.css";
 export default function CartPage() {
   const [cart, setCart] = useState([]);
   const token = localStorage.getItem("token");
+  const backend = "http://localhost:5000";
 
   useEffect(() => {
     fetchCart();
@@ -11,10 +12,11 @@ export default function CartPage() {
 
   const fetchCart = async () => {
     try {
-      const res = await fetch("http://localhost:5000/cart/", {
+      const res = await fetch(`${backend}/cart/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
+    
       setCart(Array.isArray(data.items) ? data.items : []);
     } catch (err) {
       console.error(err);
@@ -24,13 +26,11 @@ export default function CartPage() {
 
   const removeItem = async (productId) => {
     try {
-      const res = await fetch(
-        `http://localhost:5000/cart/remove/${productId}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      if (!productId) return; // safety check
+      const res = await fetch(`${backend}/cart/remove/${productId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (res.ok) fetchCart();
     } catch (err) {
       console.error(err);
@@ -42,24 +42,31 @@ export default function CartPage() {
     0
   );
 
+  // Filter out any null products for rendering
+  const validCart = cart.filter((i) => i.product);
+
   return (
     <div className="cart-container">
       <h2>Your Cart</h2>
 
-      {cart.length === 0 ? (
+      {validCart.length === 0 ? (
         <p className="empty">🛍️ Your cart is empty.</p>
       ) : (
         <div className="cart-grid">
           <div className="cart-items">
-            {cart.map((item) => (
+            {validCart.map((item) => (
               <div className="cart-card" key={item.product._id}>
                 <img
-                  src={`https://picsum.photos/seed/${item.product._id}/200/200`}
-                  alt={item.product.name}
+                  src={
+                    item.product.imageUrl
+                      ? `${backend}${item.product.imageUrl}`
+                      : `https://picsum.photos/seed/${item.product.name}/200/200`
+                  }
+                  alt={item.product.name || "Product image"}
                 />
                 <div className="cart-details">
-                  <h3>{item.product.name}</h3>
-                  <p>${item.product.price}</p>
+                  <h3>{item.product.title || "Deleted product"}</h3>
+                  <p>{item.product.price || 0} krones</p>
                   <p>Qty: {item.quantity}</p>
                   <button
                     className="remove-btn"
@@ -74,7 +81,7 @@ export default function CartPage() {
 
           <div className="cart-summary">
             <h3>Order Summary</h3>
-            <p>Total: ${total.toFixed(2)}</p>
+            <p>Total: {total.toFixed(2)} Krones</p>
             <button className="checkout-btn">Proceed to Checkout</button>
           </div>
         </div>
