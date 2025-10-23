@@ -1,26 +1,49 @@
+/* === FULL SCREEN CONTAINER === */
 .checkout-container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px 60px;
   color: #f3f3f3;
   background: radial-gradient(circle at top left, #0b001a, #1a0033);
-  border-radius: 16px;
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.1);
+  border-radius: 0; /* full screen, no rounded corners */
+  box-shadow: inset 0 0 50px rgba(168, 85, 247, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: hidden;
 }
 
+/* Optional: custom scroll for full page */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #a855f7, #ec4899);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0b001a;
+}
+
+/* === HEADER === */
 .checkout-container h2 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 30px;
   background: linear-gradient(90deg, #a855f7, #ec4899);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-align: center;
 }
 
-/* Layout */
+/* === GRID LAYOUT === */
 .checkout-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
+  width: 100%;
+  max-width: 1400px;
 }
 
 /* === ORDER SUMMARY === */
@@ -29,7 +52,8 @@
   padding: 25px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  width: 100%;
 }
 
 .order-summary h3 {
@@ -100,7 +124,8 @@
   padding: 25px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  width: 100%;
 }
 
 .checkout-form h3 {
@@ -191,8 +216,12 @@
 }
 
 /* === RESPONSIVE === */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .checkout-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .checkout-container {
+    padding: 30px 20px;
   }
 }

@@ -1,19 +1,23 @@
+/* === Full Screen Order History === */
 .order-history-container {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 20px;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #0b001a 0%, #1a0033 100%);
   color: #f3f4f6;
+  box-sizing: border-box;
 }
 
+/* Header */
 .order-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
   padding-bottom: 20px;
-  border-bottom: 2px solid #a855f7; /* pink-purple accent */
+  border-bottom: 2px solid #a855f7;
 }
 
 .order-header h2 {
@@ -43,15 +47,15 @@
 /* Empty State */
 .empty-state {
   text-align: center;
-  padding: 80px 20px;
+  padding: 100px 20px;
   background: linear-gradient(135deg, #1a0033, #0b001a);
   border-radius: 16px;
-  margin-top: 40px;
+  margin-top: 60px;
   color: #f3f4f6;
 }
 
 .empty-state p {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #d1d5db;
   margin-bottom: 30px;
 }
@@ -79,15 +83,18 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
+  width: 100%;
 }
 
+/* Order Card */
 .order-card {
-  background: #1a0033;
+  background: rgba(26, 0, 51, 0.9);
   border-radius: 12px;
   padding: 25px;
   box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
   transition: all 0.3s ease;
   border: 1px solid #a855f7;
+  width: 100%;
 }
 
 .order-card:hover {
@@ -142,14 +149,14 @@
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: #0b001a;
+  background: rgba(11, 0, 26, 0.9);
   border-radius: 8px;
   transition: background 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 0 5px #a855f7;
 }
 
 .order-item:hover {
-  background: #1a0033;
+  background: rgba(26, 0, 51, 0.95);
   box-shadow: 0 0 15px #ec4899;
 }
 
@@ -195,10 +202,6 @@
   border-top: 2px solid #a855f7;
 }
 
-.shipping-info {
-  flex: 1;
-}
-
 .shipping-info strong {
   display: block;
   color: #f3f4f6;
@@ -234,7 +237,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .order-history-container {
-    padding: 15px;
+    padding: 20px;
   }
 
   .order-header {
